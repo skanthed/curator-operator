@@ -60,7 +60,7 @@ metadata:
         }
       ]
     capabilities: Basic Install
-    operators.operatorframework.io/builder: operator-sdk-v1.16.0+git
+    operators.operatorframework.io/builder: operator-sdk-v1.22.2
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
   name: curator-operator.v0.0.1
   namespace: placeholder
@@ -278,7 +278,9 @@ spec:
           - create
         serviceAccountName: curator-operator-controller-manager
       deployments:
-      - name: curator-operator-controller-manager
+      - label:
+          control-plane: controller-manager
+        name: curator-operator-controller-manager
         spec:
           replicas: 1
           selector:
@@ -344,7 +346,7 @@ spec:
                     secretKeyRef:
                       key: DatabasePort
                       name: db-secret-file
-                image: quay.io/operate-first/curator-operator:v0.0.1
+                image: surbhi0129/curator-operator-new-olm-test:latest
                 livenessProbe:
                   httpGet:
                     path: /healthz
